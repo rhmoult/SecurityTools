@@ -275,7 +275,7 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     })
 
 
-def run(HandlerClass, ServerClass, protocol="HTTP/1.0"):
+def run(HandlerClass=SimpleHTTPRequestHandler, ServerClass=BaseHTTPServer.HTTPServer, protocol="HTTP/1.0"):
 
     if sys.argv[1:]:
         port = int(sys.argv[1])
@@ -293,8 +293,5 @@ def run(HandlerClass, ServerClass, protocol="HTTP/1.0"):
     httpd.serve_forever()
 
 
-def test(HandlerClass=SimpleHTTPRequestHandler, ServerClass=BaseHTTPServer.HTTPServer):
-    run(HandlerClass, ServerClass)
-
 if __name__ == '__main__':
-    test()
+    run()
