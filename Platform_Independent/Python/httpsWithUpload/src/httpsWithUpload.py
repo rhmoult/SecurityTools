@@ -3,6 +3,10 @@
 """Simple HTTP Server With Upload and SSL.
 This module builds on BaseHTTPServer by implementing the standard GET
 and HEAD requests in a fairly straightforward manner.
+
+Create a certificate using the hostname or IP address as the common name with
+the following command: openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
+Enter that path under /path/to/cert
 """
 
 __version__ = "0.2"
@@ -285,7 +289,7 @@ def run(HandlerClass, ServerClass, protocol="HTTP/1.0"):
 
     sa = httpd.socket.getsockname()
     print "Serving HTTP on", sa[0], "port", sa[1], "..."
-    httpd.socket = ssl.wrap_socket(httpd.socket, certfile='c:/cygwin64/home/rmoulton/certs/server.pem', server_side=True)
+    httpd.socket = ssl.wrap_socket(httpd.socket, certfile='/path/to/cert', server_side=True)
     httpd.serve_forever()
 
 
