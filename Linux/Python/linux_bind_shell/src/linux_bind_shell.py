@@ -3,7 +3,6 @@
 # This script will create a basic bind shell listening on a Linux port
 
 import socket
-import subprocess
 import sys
 import os
 import pty
